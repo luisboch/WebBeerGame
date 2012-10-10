@@ -1,0 +1,7 @@
+INDEX VERSION 1.122+/home/luis/JAVA/facul/WebBeerGame/.metadata/.plugins/org.eclipse.wst.jsdt.core/indexes
+3980883656.index
+2568190407.index
+4045766296.index
+923751108.index
+1109961232.index
+527776377.index
