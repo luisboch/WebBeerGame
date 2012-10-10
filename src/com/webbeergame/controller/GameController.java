@@ -19,7 +19,6 @@ public class GameController implements PlayerListener{
 	 * Usado para contar os rounds já jogados
 	 */
 	private Integer round;
-	private Player currentPlayer;
 	
 	private List<Component> components;
 	
