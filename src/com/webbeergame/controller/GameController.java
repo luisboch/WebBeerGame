@@ -54,8 +54,9 @@ public class GameController implements PlayerListener, Serializable{
 	private void nextPlayer() {
 		for(Component c:components){
 			if(!getController().get(c)){
-				c.getPlayer().setPlaying(true);
+				
 				log.log(Level.INFO,"Player {0} is Playing", c.getPlayer().getName());
+				c.getPlayer().setPlaying(true);
 				break;
 			}
 		}
