@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
@@ -6,8 +6,60 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:c="http://java.sun.com/jstl/core">
 
-<h:head></h:head> 
-<body> 
-<h:outputLabel value="Luis Rocha com B" style="font-size: 30px" />
-</body> 
+<h:head>
+</h:head>
+<h:body>
+	<div id="top-bar">
+		<h:form id="menuForm">
+			<ul>
+				<li><p:commandButton action="#{gameBean.newGame}"
+						value="Start new Game" update=":formGeral" process="menuForm"
+						oncomplete="try{pDialog.show();}catch(e){}" /></li>
+			</ul>
+		</h:form>
+	</div>
+	<div id="content">
+		<h:form id="formGeral">
+			<h:panelGroup layout="block" id="playerName"
+				rendered="#{gameBean.renderPlayerName}">
+			Please enter your name:<br />
+				<p:inputText value="#{gameBean.session.player.name}" />
+				<br />
+				<p:commandButton action="#{ gameBean.newGame }"
+					value="Start new Game" update="formGeral" process="formGeral"
+					oncomplete="pDialog.show()" />
+			</h:panelGroup>
+			<h:panelGroup id="gamePanel" rendered="#{gameBean.renderGame}">
+				<div id="game-principal">
+					<div id="game-players-panel">
+						<ul>
+							<ui:repeat var="c" value="#{ gameBean.controller.components }">
+								<li><span class="status"
+									style="#{c.player.playing?'background: green':''}"> <h:outputText
+											value="#{gameBean.controller.controller[c] ? 'Jogou' : 'Não Jogou'}" />
+								</span> #{c.player.name}</li>
+							</ui:repeat>
+						</ul>
+					</div>
+					<div id="game-components-panel"></div>
+				</div>
+			</h:panelGroup>
+
+			<p:dialog id="dialogSelection" widgetVar="pDialog"
+				rendered="#{gameBean.renderDialogComponentSelecion}">
+				<!-- TODO criar seleção de tipos de components -->
+				Please select your component:<br />
+				<p:selectOneMenu value="#{gameBean.selectedComponent}">
+					<f:selectItems value="#{gameBean.components}" var="c"
+						itemLabel="#{c.toString()}" itemValue="#{c}" />
+				</p:selectOneMenu>
+				<br />
+				<p:commandButton action="#{gameBean.startGame}" value="Play"
+					oncomplete="try {pDialog.hide();} catch (e){}" update="formGeral"
+					process="formGeral" />
+			</p:dialog>
+		</h:form>
+	</div>
+	<div id="footer-bar"></div>
+</h:body>
 </html>

@@ -2,6 +2,7 @@
  * 
  */
 package com.webbeergame.controller;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,8 +10,9 @@ import java.util.List;
  * @author luis
  * 
  */
-public class Player {
+public class Player implements Serializable{
 	
+	private static final long serialVersionUID = -8224758269420528151L;
 	Integer id;
 	String name;
 	Component component;
@@ -36,6 +38,9 @@ public class Player {
 	}
 	public void setComponent(Component component) {
 		this.component = component;
+		if(component.getPlayer() == null || !component.getPlayer().equals(this)){
+			component.setPlayer(this);
+		}
 	}
 	public boolean isPlaying() {
 		return playing;

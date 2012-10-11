@@ -3,11 +3,15 @@
  */
 package com.webbeergame.controller;
 
+import java.io.Serializable;
+
 /**
  * @author luis
  *
  */
-public abstract class AbstractComponent implements Component{
+public abstract class AbstractComponent implements Component, Serializable{
+
+	private static final long serialVersionUID = 8890976788930142003L;
 	private Integer delay1;
 	private Integer delay2;
 	private Integer inventory;
@@ -68,6 +72,9 @@ public abstract class AbstractComponent implements Component{
 	@Override
 	public void setPlayer(Player player) {
 		this.player = player;
+		if(player.getComponent() == null || !player.getComponent().equals(this)){
+			player.setComponent(this);
+		}
 	}
 	
 	@Override
@@ -86,5 +93,20 @@ public abstract class AbstractComponent implements Component{
 	@Override
 	public int compareTo(Component o) {
 		return Integer.valueOf(o.getOrder()).compareTo(this.getOrder());
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		
+		if(obj instanceof Component){
+		
+			Component c= (Component) obj;
+			
+			if(c.getOrder() == this.getOrder()){
+				return super.equals(obj);
+			}
+		} 
+		
+		return false;
 	}
 }
