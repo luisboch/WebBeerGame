@@ -9,12 +9,16 @@
 <h:head>
 </h:head>
 <h:body>
+	<p:growl id="messages" />
 	<div id="top-bar">
 		<h:form id="menuForm">
 			<ul>
 				<li><p:commandButton action="#{gameBean.newGame}"
-						value="Start new Game" update=":formGeral" process="menuForm"
+						value="Start new Game" update=":formGeral :messages" process="menuForm"
 						oncomplete="try{pDialog.show();}catch(e){}" /></li>
+				<li><p:commandButton action="#{gameBean.controller.nextRound}"
+						value="Next Round" update=":formGeral :messages" process="menuForm"
+						oncomplete="try{dialogChoice.show();}catch(e){}" /></li>
 			</ul>
 		</h:form>
 	</div>
@@ -26,11 +30,12 @@
 				<p:inputText value="#{gameBean.session.player.name}" />
 				<br />
 				<p:commandButton action="#{ gameBean.newGame }"
-					value="Start new Game" update="formGeral" process="formGeral"
+					value="Start new Game" update="formGeral :messages" process="formGeral"
 					oncomplete="pDialog.show()" />
 			</h:panelGroup>
 			<h:panelGroup id="gamePanel" rendered="#{gameBean.renderGame}">
 				<div id="game-principal">
+					<div>Current Round: #{gameBean.controller.round}</div>
 					<div id="game-players-panel">
 						<ul>
 							<ui:repeat var="c" value="#{ gameBean.controller.components }">
@@ -55,7 +60,17 @@
 				</p:selectOneMenu>
 				<br />
 				<p:commandButton action="#{gameBean.startGame}" value="Play"
-					oncomplete="try {pDialog.hide();} catch (e){}" update="formGeral"
+					oncomplete="try {pDialog.hide();} catch (e){}" update="formGeral :messages"
+					process="formGeral" />
+			</p:dialog>
+			<p:dialog id="dialogChoice" widgetVar="dialogChoice"
+				rendered="#{gameBean.session.player.playing}">
+				<!-- TODO criar seleção de tipos de components -->
+				Please enter you choice:<br />
+				<p:inputText value="#{gameBean.session.player.choice}" />
+				<br />
+				<p:commandButton action="#{gameBean.session.player.notifyListener}" value="Set"
+					oncomplete="try {dialogChoice.hide();} catch (e){}" update="formGeral :messages"
 					process="formGeral" />
 			</p:dialog>
 		</h:form>
@@ -63,3 +78,4 @@
 	<div id="footer-bar"></div>
 </h:body>
 </html>
+

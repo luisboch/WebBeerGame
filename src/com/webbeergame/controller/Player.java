@@ -59,7 +59,7 @@ public class Player implements Serializable{
 		getListeners().remove(listener);
 	}
 	
-	protected void notifyListener() {
+	public void notifyListener() {
 		for(PlayerListener l:getListeners()){
 			l.finishPlay(this);
 		}
@@ -72,4 +72,5 @@ public class Player implements Serializable{
 	public void setChoice(Integer choice) {
 		this.choice = choice;
 	}
+	
 }

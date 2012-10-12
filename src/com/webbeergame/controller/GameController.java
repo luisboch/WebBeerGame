@@ -187,4 +187,8 @@ public class GameController implements PlayerListener, Serializable{
 		getComponents().clear();
 		getController().clear();
 	}
+	
+	public Integer getRound() {
+		return round;
+	}
 }
