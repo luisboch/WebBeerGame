@@ -9,15 +9,15 @@
 <h:head>
 	<style type="text/css">
 .ui-widget,.ui-widget .ui-widget {
-    font-size: 13px !important;
+	font-size: 13px !important;
+}
 
-} 
 #ajax-status {
 	position: absolute;
 	left: 0px;
 	bottom: 0px;
 	padding: 2px 20px 2px 3px;
-	color: #363;
+	info color: #363;
 	background: #FDA;
 	border: #CA8 1px solid;
 	font-weight: bold;
@@ -79,25 +79,78 @@ body {
 #current-round {
 	margin-top: 10px;
 }
-.game-info-items div.game-infor-item, .game-info-items div.game-infor-value{
-	margin:0px;
-	border:none;
+
+.game-info-items div.game-infor-item,.game-info-items div.game-infor-value
+	{
+	margin: 0px;
+	border: none;
 	padding: 0px;
 }
-.game-info-items div.game-infor-item{
-	width: 80%;
-	float:left;
 
+.game-info-items div.game-infor-item {
+	width: 80%;
+	float: left;
 }
-.game-info-items div.game-info-value{
+
+.game-info-items div.game-info-value {
 	width: 20%;
-	float:right;
+	float: right;
 	font-weight: bold;
 }
-.game-component-area{
+
+.game-component-area {
 	width: 785px;
+	float: left;
+}
+
+.game-component-area .components-info {
+	width: 20%;
 	height: 300px;
-	float:left;; 
+	float: right;
+	height: 300px;
+}
+
+.game-component-area .components-items {
+	width: 80%;
+	float: left;
+}
+
+.component-separator {
+	height: 10px;
+}
+
+.component-height {
+	height: 80px;
+}
+
+.component-info {
+	
+}
+
+.component-info .component-attr {
+	float: left;
+	width: 80%;
+	text-align: right;
+	height: 25px;
+	
+}
+
+.component-info .component-value {
+	float: right;
+	width: 20%;
+	height: 25px;
+	font-weight: bold;
+}
+.component{
+	height: 30px;
+	width: 19%;
+	float:left;
+	border:1px solid;
+	margin-top:25px;
+	margin-left: 10%;
+}
+.panel-components{
+	position:absolute;
 }
 </style>
 </h:head>
@@ -118,6 +171,8 @@ body {
 							rendered="#{gameBean.controller.canGoNextRound}"
 							process="menuForm"
 							oncomplete="try{dialogChoice.show();}catch(e){}" /></li>
+					<li><p:selectBooleanButton onLabel="Hide Info"
+							offLabel="Show info" value="true" onchange="checkInfo();" /></li>
 					<li style="display: block; clear: both; float: none;"></li>
 				</ul>
 			</h:form>
@@ -136,14 +191,81 @@ body {
 				<h:panelGroup id="gamePanel" rendered="#{gameBean.renderGame}">
 					<div id="game-principal">
 						<p:panel styleClass="game-component-area">
-							<div class=""></div>
+							<div class="components-items">
+								<div class="component-height panel-components">
+									<div class="component-fragancy">
+										<div class=""></div>
+									</div>
+									<div class="component component-inventory"></div>
+									<div class="component-delay-1 component component-delay">
+									</div>
+									<div class="component-delay-2 component component-delay">
+									</div>
+								</div>
+								<div class="component-separator"></div>
+								<div style="clear: both;"></div>
+							</div>
+							<div class="components-info">
+								<div class="component-height component-info">
+									<div class="ui-widget-content">
+										<div class="component-attr">Total Cost:</div>
+										<div class="component-value">#{gameBean.controller.components[0].totalCost}</div>
+										<div class="component-attr">Back Order:</div>
+										<div class="component-value">#{gameBean.controller.components[0].backOrder}</div>
+										<div class="component-attr">Recent Order:</div>
+										<div class="component-value">#{gameBean.controller.components[0].recentOrder}</div>
+										<div style="clear: both;"></div>
+									</div>
+								</div>
+								<div class="component-separator"></div>
+								<div class="component-height component-info">
+
+									<div class="ui-widget-content">
+										<div class="component-attr">Total Cost:</div>
+										<div class="component-value">#{gameBean.controller.components[1].totalCost}</div>
+										<div class="component-attr">Back Order:</div>
+										<div class="component-value">#{gameBean.controller.components[1].backOrder}</div>
+										<div class="component-attr">Recent Order:</div>
+										<div class="component-value">#{gameBean.controller.components[1].recentOrder}</div>
+										<div style="clear: both;"></div>
+									</div>
+
+								</div>
+								<div class="component-separator"></div>
+								<div class="component-height component-info">
+									<div class="ui-widget-content">
+										<div class="component-attr">Total Cost:</div>
+										<div class="component-value">#{gameBean.controller.components[2].totalCost}</div>
+										<div class="component-attr">Back Order:</div>
+										<div class="component-value">#{gameBean.controller.components[2].backOrder}</div>
+										<div class="component-attr">Recent Order:</div>
+										<div class="component-value">#{gameBean.controller.components[2].recentOrder}</div>
+										<div style="clear: both;"></div>
+									</div>
+								</div>
+								<div class="component-separator"></div>
+								<div class="component-height component-info">
+									<div class="ui-widget-content">
+										<div class="component-attr">Total Cost:</div>
+										<div class="component-value">#{gameBean.controller.components[3].totalCost}</div>
+										<div class="component-attr">Back Order:</div>
+										<div class="component-value">#{gameBean.controller.components[3].backOrder}</div>
+										<div class="component-attr">Recent Order:</div>
+										<div class="component-value">#{gameBean.controller.components[3].recentOrder}</div>
+										<div style="clear: both;"></div>
+									</div>
+								</div>
+								<div style="clear: both;"></div>
+							</div>
+							<div style="clear: both;"></div>
 						</p:panel>
-						<div id="game-info" >
-							<p:panel toggleable="true" header="Infos" styleClass="game-info-items">
+						<div id="game-info">
+							<p:panel toggleable="true" header="Infos"
+								styleClass="game-info-items">
 								<div class="game-infor-item">CurrentRound</div>
 								<div class="game-info-value">#{gameBean.controller.round}
 								</div>
-								<div style="clear:both;"></div>
+								<div style="clear: both;"></div>
 							</p:panel>
 							<p:panel header="Players" toggleable="true" id="p-panel-players">
 								<div id="game-players-panel">
@@ -210,27 +332,50 @@ body {
 		function ajaxStop() {
 			$('#ajax-status').fadeOut();
 		}
-		function hideGameInfo(){
+		function hideGameInfo() {
 			$('#game-info').animate({
-				'height':'0px'
-			}, function(){
-				$('#game-info').css('display','none')
+				'opacity' : '0'
+			}, 200, function() {
+				$('#game-info').css('display', 'none')
 				$('.game-component-area').animate({
-					'width':'1017px'
+					'width' : '1017px'
+				}, function() {
+					annimating = false;
 				})
 			})
-			
-		}
-		function showGameInfo(){
 
-				$('.game-component-area').animate({
-					'width':'785px'
-				},function(){
-					$('#game-info').css({'display':'block','height':'' });
-					
-					$('#game-info').slideDown()					
+		}
+		function showGameInfo() {
+
+			$('.game-component-area').animate({
+				'width' : '785px'
+			}, function() {
+				$('#game-info').css({
+					'display' : 'block',
+					'height' : '0px'
+				});
+
+				$('#game-info').animate({
+					'opacity' : '1'
+				}, 200, function() {
+					annimating = false;
 				})
-			
+			})
+
+		}
+		var showInfo = true;
+		var annimating = false;
+		function checkInfo() {
+			if (!annimating) {
+				annimating = true;
+
+				if (showInfo) {
+					hideGameInfo();
+				} else {
+					showGameInfo();
+				}
+				showInfo = !showInfo;
+			}
 		}
 	</script>
 </h:body>
