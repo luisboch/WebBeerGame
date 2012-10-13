@@ -84,9 +84,9 @@ public class GameController implements PlayerListener, Serializable {
 
 		List<Component> components = getComponents();
 
-		if (components.isEmpty()) {
+		if (components.isEmpty() || components.size() > 4) {
 			throw new ControllerException(
-					"Need one or more players to star new Game");
+					"Need one or max 4 players to start new Game");
 		}
 
 		boolean retailer = false;
@@ -104,6 +104,7 @@ public class GameController implements PlayerListener, Serializable {
 			} else if (c instanceof Factory) {
 				factory = true;
 			}
+			log.info("Player "+c.getPlayer().getName()+" has found");
 			// set All players to not playing
 			c.getPlayer().setPlaying(false);
 		}
@@ -166,6 +167,8 @@ public class GameController implements PlayerListener, Serializable {
 		
 		
 		this.components = components;
+		
+		
 
 	}
 
@@ -207,6 +210,9 @@ public class GameController implements PlayerListener, Serializable {
 	public void clear() {
 		getComponents().clear();
 		getController().clear();
+		log.info("Clearing Game");
+		log.log(Level.FINEST, "Size of Components:{0}", getComponents().size());
+		log.log(Level.FINEST, "Size of Controller:{0}", getController().size());
 	}
 
 	public Integer getRound() {

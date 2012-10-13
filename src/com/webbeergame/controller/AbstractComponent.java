@@ -10,7 +10,9 @@ import java.io.Serializable;
  *
  */
 public abstract class AbstractComponent implements Component, Serializable{
+	
 
+	
 	private static final long serialVersionUID = 8890976788930142003L;
 	private Integer delay1;
 	private Integer delay2;
@@ -19,6 +21,15 @@ public abstract class AbstractComponent implements Component, Serializable{
 	private Integer backOrder;
 	private Integer recentOrder;
 	private Player player;
+	
+	public AbstractComponent() {
+		this.delay1 = 0;
+		this.delay2 = 0;
+		this.inventory = 0;
+		this.totalCost = 0;
+		this.backOrder = 0;
+		this.recentOrder = 0;
+	}
 	
 	@Override
 	public Integer getDelay1() {

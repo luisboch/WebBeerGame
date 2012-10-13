@@ -4,10 +4,14 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui"
-	xmlns:c="http://java.sun.com/jstl/core">
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
 
 <h:head>
 	<style type="text/css">
+.ui-widget,.ui-widget .ui-widget {
+    font-size: 13px !important;
+
+} 
 #ajax-status {
 	position: absolute;
 	left: 0px;
@@ -19,24 +23,81 @@
 	font-weight: bold;
 }
 
-body{
+body {
 	margin: auto;
 	width: 1024px;
 }
-#game-players-panel{
-	float: right;
-}
-#game-players-panel ul{
+
+#game-players-panel ul {
 	list-style: none;
+	padding: 0px;
+	margin: 0px;
 }
+
 #top-bar ul {
-    list-style: none;
-    padding: 3px 0px;
-    margin: 0px;
-    display: block;
+	list-style: none;
+	padding: 3px 0px;
+	margin: 0px;
+	display: block;
 }
-#top-bar ul li{
+
+#top-bar ul li {
 	float: right;
+}
+
+#game-players-panel div {
+	height: 20px;
+}
+
+#game-players-panel {
+	cursor: default;
+}
+
+#game-players-panel div span {
+	float: left;
+}
+
+#game-players-panel div span:first-child {
+	margin: 2px 5px 0px 5px;
+}
+
+#game-players-panel div span.player-name {
+	font-size: 14px;
+	margin-right: 10px;
+}
+
+#game-info {
+	float: right;
+	width: 230px;
+}
+
+#current-round div {
+	text-align: right;
+	margin-right: 20px;
+}
+
+#current-round {
+	margin-top: 10px;
+}
+.game-info-items div.game-infor-item, .game-info-items div.game-infor-value{
+	margin:0px;
+	border:none;
+	padding: 0px;
+}
+.game-info-items div.game-infor-item{
+	width: 80%;
+	float:left;
+
+}
+.game-info-items div.game-info-value{
+	width: 20%;
+	float:right;
+	font-weight: bold;
+}
+.game-component-area{
+	width: 785px;
+	height: 300px;
+	float:left;; 
 }
 </style>
 </h:head>
@@ -50,13 +111,14 @@ body{
 				<ul>
 					<li><p:commandButton action="#{gameBean.newGame}"
 							value="Start new Game" update=":formGeral :messages"
-							process="menuForm" oncomplete="try{pDialog.show();}catch(e){}" /></li>
+							process="menuForm"
+							oncomplete="try{pDialog.show();dialogChoice.hide()}catch(e){}" /></li>
 					<li><p:commandButton action="#{gameBean.controller.nextRound}"
 							value="Next Round" update=":allContent :messages"
 							rendered="#{gameBean.controller.canGoNextRound}"
 							process="menuForm"
 							oncomplete="try{dialogChoice.show();}catch(e){}" /></li>
-					<li style="display: block;clear: both;float:none;"></li>
+					<li style="display: block; clear: both; float: none;"></li>
 				</ul>
 			</h:form>
 		</div>
@@ -73,17 +135,42 @@ body{
 				</h:panelGroup>
 				<h:panelGroup id="gamePanel" rendered="#{gameBean.renderGame}">
 					<div id="game-principal">
-						<div>Current Round: #{gameBean.controller.round}</div>
-						<div id="game-players-panel">
-							<ul>
-								<ui:repeat var="c" value="#{ gameBean.controller.components }">
-									<li><span class="status" style="width:17px;#{gameBean.controller.controller[c] ? 'background:green' : 'background:yellow'}"
-										>#{c .player.playing?'>':'-'}
-									</span> #{c.player.name}</li>
-								</ui:repeat>
-							</ul>
+						<p:panel styleClass="game-component-area">
+							<div class=""></div>
+						</p:panel>
+						<div id="game-info" >
+							<p:panel toggleable="true" header="Infos" styleClass="game-info-items">
+								<div class="game-infor-item">CurrentRound</div>
+								<div class="game-info-value">#{gameBean.controller.round}
+								</div>
+								<div style="clear:both;"></div>
+							</p:panel>
+							<p:panel header="Players" toggleable="true" id="p-panel-players">
+								<div id="game-players-panel">
+									<ul>
+										<c:forEach var="c" items="#{ gameBean.controller.components }">
+											<c:if test="#{c.player.playing}">
+												<li>
+													<div class="ui-widget ui-state-highlight ui-corner-all">
+														<span class="ui-icon ui-icon-circle-triangle-e"></span> <span
+															class="player-name">#{c.player.name}</span>
+													</div>
+												</li>
+											</c:if>
+											<c:if test="#{not c.player.playing}">
+												<li>
+													<div class="ui-widget ui-corner-all">
+														<span
+															class="#{gameBean.controller.controller[c] ? 'ui-icon ui-icon-check' : 'ui-icon ui-icon-clock'}"></span>
+														<span class="player-name">#{c.player.name}</span>
+													</div>
+												</li>
+											</c:if>
+										</c:forEach>
+									</ul>
+								</div>
+							</p:panel>
 						</div>
-						<div id="game-components-panel"></div>
 					</div>
 				</h:panelGroup>
 
@@ -100,7 +187,8 @@ body{
 						update=":allContent :messages" process="formGeral" />
 				</p:dialog>
 				<p:dialog id="dialogChoice" widgetVar="dialogChoice"
-					rendered="#{gameBean.session.player.playing}" visible="true">
+					rendered="#{gameBean.session.player.playing}" visible="true"
+					closable="false" header="Choose" resizable="false">
 					<!-- TODO criar seleção de tipos de components -->
 				Please enter you choice:<br />
 					<p:inputText value="#{gameBean.session.player.choice}" />
@@ -110,6 +198,7 @@ body{
 						update=":allContent :messages" process="formGeral" />
 				</p:dialog>
 			</h:form>
+			<div style="clear: both;"></div>
 		</div>
 	</h:panelGroup>
 	<div id="footer-bar"></div>
@@ -120,6 +209,28 @@ body{
 		}
 		function ajaxStop() {
 			$('#ajax-status').fadeOut();
+		}
+		function hideGameInfo(){
+			$('#game-info').animate({
+				'height':'0px'
+			}, function(){
+				$('#game-info').css('display','none')
+				$('.game-component-area').animate({
+					'width':'1017px'
+				})
+			})
+			
+		}
+		function showGameInfo(){
+
+				$('.game-component-area').animate({
+					'width':'785px'
+				},function(){
+					$('#game-info').css({'display':'block','height':'' });
+					
+					$('#game-info').slideDown()					
+				})
+			
 		}
 	</script>
 </h:body>
