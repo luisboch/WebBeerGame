@@ -115,6 +115,10 @@ body {
 	float: left;
 }
 
+.components-items {
+	position: relative;
+}
+
 .component-separator {
 	height: 10px;
 }
@@ -132,7 +136,6 @@ body {
 	width: 80%;
 	text-align: right;
 	height: 25px;
-	
 }
 
 .component-info .component-value {
@@ -141,16 +144,57 @@ body {
 	height: 25px;
 	font-weight: bold;
 }
-.component{
+
+.component {
 	height: 30px;
 	width: 19%;
-	float:left;
-	border:1px solid;
-	margin-top:25px;
+	float: left;
+	border: 1px solid;
+	margin-top: 25px;
+	z-index: 10;
+	position: absolute;
+	/* TODO remove when set background */
+	background: #FDA;
+}
+
+.panel-components {
+	position: relative;
+	width: 100%;
+}
+
+.centerline {
+	position: absolute;
+	height: 1px;
+	background: #0078AE;
+	top: 50%;
+	left: 20%;
+	right: 20%;
+	z-index: 0;
+}
+
+.component-inventory {
 	margin-left: 10%;
 }
-.panel-components{
-	position:absolute;
+
+.component-delay-1 {
+	margin-left: 40%;
+}
+
+.component-delay-2 {
+	margin-left: 70%;
+}
+
+.arrow-left-1 {
+	left: 23%;
+}
+.arrow-left-2 {
+	left: 72.5%;
+}
+
+.component-fragancy .arrow {
+	top: -8px;
+	z-index: 1;
+	position: absolute;
 }
 </style>
 </h:head>
@@ -192,9 +236,15 @@ body {
 					<div id="game-principal">
 						<p:panel styleClass="game-component-area">
 							<div class="components-items">
+
+
 								<div class="component-height panel-components">
 									<div class="component-fragancy">
-										<div class=""></div>
+										<div class="centerline">
+											<span class="ui-icon ui-icon-carat-1-w arrow arrow-left-1"></span>
+											<span class="ui-icon ui-icon-carat-1-w arrow arrow-left-2"></span>
+											<span class="ui-icon ui-icon-carat-1-w arrow arrow-left-2"></span>
+										</div>
 									</div>
 									<div class="component component-inventory"></div>
 									<div class="component-delay-1 component component-delay">
@@ -203,6 +253,8 @@ body {
 									</div>
 								</div>
 								<div class="component-separator"></div>
+
+
 								<div style="clear: both;"></div>
 							</div>
 							<div class="components-info">
