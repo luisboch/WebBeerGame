@@ -121,6 +121,7 @@ body {
 
 .component-separator {
 	height: 10px;
+	position: relative;
 }
 
 .component-height {
@@ -149,19 +150,18 @@ body {
 	height: 30px;
 	width: 19%;
 	float: left;
-	border: 1px solid;
 	margin-top: 25px;
 	z-index: 10;
 	position: absolute;
 	/* TODO remove when set background */
-	background: #FDA;
+	background:no-repeat;
+	background-position: center center;
 }
 
 .panel-components {
 	position: relative;
 	width: 100%;
 }
-
 .centerline {
 	position: absolute;
 	height: 1px;
@@ -170,6 +170,69 @@ body {
 	left: 20%;
 	right: 20%;
 	z-index: 0;
+}
+.left-up-line{
+    background: none repeat scroll 0 0 #0078AE;
+    height: 50%;
+    left: 20%;
+    position: absolute;
+    top: 0;
+    width: 1px;
+    z-index: 0;
+}
+.left-up-line span{
+   left: -7px;
+    top: 5px;
+    position: absolute;
+    z-index: 1;
+}
+
+
+.right-up-line{
+    background: none repeat scroll 0 0 #0078AE;
+    height: 50%;
+    right: 20%;
+    position: absolute;
+    top: 0;
+    width: 1px;
+    z-index: 0;
+}
+.right-up-line span{
+   left: -7px;
+    top: 5px;
+    position: absolute;
+    z-index: 1;
+}
+
+.right-down-line{
+    background: none repeat scroll 0 0 #0078AE;
+    height: 50%;
+    right: 20%;
+    position: absolute;
+    top: 50%;
+    width: 1px;
+    z-index: 0;
+}
+.right-down-line span{
+   left: -7px;
+    top: 20px;
+    position: absolute;
+    z-index: 1;
+}
+.left-down-line{
+    background: none repeat scroll 0 0 #0078AE;
+    height: 50%;
+    left: 20%;
+    position: absolute;
+    top: 50%;
+    width: 1px;
+    z-index: 0;
+}
+.left-down-line span{
+   left: -7px;
+    top: 20px;
+    position: absolute;
+    z-index: 1;
 }
 
 .component-inventory {
@@ -195,6 +258,51 @@ body {
 	top: -8px;
 	z-index: 1;
 	position: absolute;
+}
+.component-separator .centerline .ui-icon{
+	position: absolute;
+	left:50%;
+	top: -8px;
+}
+
+.left-up-line-separator{
+    background: none repeat scroll 0 0 #0078AE;
+    height: 10px;
+    position: absolute;
+    right: 0;
+    top: -10px;
+    width: 1px;
+    z-index: 0;
+}
+.right-down-line-separator{
+    background: none repeat scroll 0 0 #0078AE;
+    height: 10px;
+    position: absolute;
+    left: 0;
+    top: 0px;
+    width: 1px;
+    z-index: 0;
+}
+.component-inventory{
+	background-image:url("#{resource['images:invetory-1.png']}")
+}
+.component-delay{
+	background-image:url("#{resource['images:truck_1.png']}")
+}
+
+.component .component-value{
+	position:absolute;
+	border: 1px solid #DB8;
+	background: #FDA;
+	opacity:0.6;
+	padding:2px 7px;
+	left:65%;
+	top:-15px;
+	border-radius:2px;
+	cursor: default;
+}
+.component .component-value:hover{
+	opacity:1;
 }
 </style>
 </h:head>
@@ -236,8 +344,6 @@ body {
 					<div id="game-principal">
 						<p:panel styleClass="game-component-area">
 							<div class="components-items">
-
-
 								<div class="component-height panel-components">
 									<div class="component-fragancy">
 										<div class="centerline">
@@ -245,13 +351,120 @@ body {
 											<span class="ui-icon ui-icon-carat-1-w arrow arrow-left-2"></span>
 											<span class="ui-icon ui-icon-carat-1-w arrow arrow-left-2"></span>
 										</div>
+										<div class="left-up-line">
+											<span class="ui-icon ui-icon-carat-1-n "></span>
+										</div>
+										<div class="right-down-line">
+											<span class="ui-icon ui-icon-carat-1-n "></span>
+										</div>
 									</div>
-									<div class="component component-inventory"></div>
+									<div class="component component-inventory">
+										<span class="component-value">#{gameBean.controller.components[0].inventory}</span>
+									</div>
 									<div class="component-delay-1 component component-delay">
+										<span class="component-value">#{gameBean.controller.components[0].delay1}</span>
 									</div>
 									<div class="component-delay-2 component component-delay">
+										<span class="component-value">#{gameBean.controller.components[0].delay2}</span>
 									</div>
 								</div>
+								
+								<div class="component-separator">
+									<div class="centerline">
+											<span class="ui-icon ui-icon-carat-1-e"></span>
+											<span class="left-up-line-separator"></span>
+											<span class="right-down-line-separator"></span>
+									</div>
+								</div>
+								
+								<div class="component-height panel-components">
+									<div class="component-fragancy">
+										<div class="centerline">
+											<span class="ui-icon ui-icon-carat-1-w arrow arrow-left-1"></span>
+											<span class="ui-icon ui-icon-carat-1-w arrow arrow-left-2"></span>
+											<span class="ui-icon ui-icon-carat-1-w arrow arrow-left-2"></span>
+										</div>
+										<div class="left-up-line">
+											<span class="ui-icon ui-icon-carat-1-n "></span>
+										</div>
+										<div class="right-down-line">
+											<span class="ui-icon ui-icon-carat-1-n "></span>
+										</div>
+									</div>
+									<div class="component component-inventory">
+										<span class="component-value">#{gameBean.controller.components[1].inventory}</span>
+									</div>
+									<div class="component-delay-1 component component-delay">
+										<span class="component-value">#{gameBean.controller.components[1].delay1}</span>
+									</div>
+									<div class="component-delay-2 component component-delay">
+										<span class="component-value">#{gameBean.controller.components[1].delay2}</span>
+									</div>
+								</div>
+								<div class="component-separator">
+									<div class="centerline">
+											<span class="ui-icon ui-icon-carat-1-e"></span>
+											<span class="left-up-line-separator"></span>
+											<span class="right-down-line-separator"></span>
+									</div>
+								</div>
+								
+								<div class="component-height panel-components">
+									<div class="component-fragancy">
+										<div class="centerline">
+											<span class="ui-icon ui-icon-carat-1-w arrow arrow-left-1"></span>
+											<span class="ui-icon ui-icon-carat-1-w arrow arrow-left-2"></span>
+											<span class="ui-icon ui-icon-carat-1-w arrow arrow-left-2"></span>
+										</div>
+										<div class="left-up-line">
+											<span class="ui-icon ui-icon-carat-1-n "></span>
+										</div>
+										<div class="right-down-line">
+											<span class="ui-icon ui-icon-carat-1-n "></span>
+										</div>
+									</div>
+									<div class="component component-inventory">
+										<span class="component-value">#{gameBean.controller.components[2].inventory}</span>
+									</div>
+									<div class="component-delay-1 component component-delay">
+										<span class="component-value">#{gameBean.controller.components[2].delay1}</span>
+									</div>
+									<div class="component-delay-2 component component-delay">
+										<span class="component-value">#{gameBean.controller.components[2].delay2}</span>
+									</div>
+									
+									
+								</div>
+								<div class="component-separator">
+									<div class="centerline">
+											<span class="ui-icon ui-icon-carat-1-e"></span>
+											<span class="left-up-line-separator"></span>
+											<span class="right-down-line-separator"></span>
+									</div>
+								</div>
+								
+								<div class="component-height panel-components">
+									<div class="component-fragancy">
+										<div class="centerline">
+											<span class="ui-icon ui-icon-carat-1-w arrow arrow-left-1"></span>
+											<span class="ui-icon ui-icon-carat-1-w arrow arrow-left-2"></span>
+											<span class="ui-icon ui-icon-carat-1-w arrow arrow-left-2"></span>
+										</div>
+										<div class="left-up-line">
+											<span class="ui-icon ui-icon-carat-1-n "></span>
+										</div>
+									</div>
+									<div class="component component-inventory">
+										<span class="component-value">#{gameBean.controller.components[3].inventory}</span>
+									</div>
+									<div class="component-delay-1 component component-delay">
+										<span class="component-value">#{gameBean.controller.components[3].delay1}</span>
+									</div>
+									<div class="component-delay-2 component" style="background-image:url(#{resource['images:invetory-1.png']})">
+										<span class="component-value">#{gameBean.controller.components[3].delay2}</span>
+									</div>
+								</div>
+								
 								<div class="component-separator"></div>
 
 

@@ -1,7 +1,7 @@
 *.class
 .settings
 Servers/*
-.metada
+.metadata/*
 # Package Files #
 *.jar
 *.war
