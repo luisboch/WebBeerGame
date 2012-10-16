@@ -66,7 +66,7 @@ body {
 	margin-right: 10px;
 }
 
-#game-info {
+.game-info {
 	float: right;
 	width: 230px;
 }
@@ -324,7 +324,11 @@ body {
 							process="menuForm"
 							oncomplete="try{dialogChoice.show();}catch(e){}" /></li>
 					<li><p:selectBooleanButton onLabel="Hide Info"
-							offLabel="Show info" value="true" onchange="checkInfo();" /></li>
+							offLabel="Show info" value="#{gameBean.session.player.configuration.showConfig}"
+							onchange="checkInfo();">
+							<p:ajax />
+							</p:selectBooleanButton>
+					</li>
 					<li style="display: block; clear: both; float: none;"></li>
 				</ul>
 			</h:form>
@@ -342,7 +346,7 @@ body {
 				</h:panelGroup>
 				<h:panelGroup id="gamePanel" rendered="#{gameBean.renderGame}">
 					<div id="game-principal">
-						<p:panel styleClass="game-component-area">
+						<p:panel styleClass="game-component-area" style="width:#{gameBean.session.player.configuration.showConfig?'785px':'1017px'}">
 							<div class="components-items">
 								<div class="component-height panel-components">
 									<div class="component-fragancy">
@@ -524,7 +528,7 @@ body {
 							</div>
 							<div style="clear: both;"></div>
 						</p:panel>
-						<div id="game-info">
+						<h:panelGroup layout="block" styleClass="game-info" style="#{gameBean.session.player.configuration.showConfig?'':'display:none'}">
 							<p:panel toggleable="true" header="Infos"
 								styleClass="game-info-items">
 								<div class="game-infor-item">CurrentRound</div>
@@ -557,7 +561,7 @@ body {
 									</ul>
 								</div>
 							</p:panel>
-						</div>
+						</h:panelGroup>
 					</div>
 				</h:panelGroup>
 
@@ -598,10 +602,10 @@ body {
 			$('#ajax-status').fadeOut();
 		}
 		function hideGameInfo() {
-			$('#game-info').animate({
+			$('.game-info').animate({
 				'opacity' : '0'
 			}, 200, function() {
-				$('#game-info').css('display', 'none')
+				$('.game-info').css('display', 'none')
 				$('.game-component-area').animate({
 					'width' : '1017px'
 				}, function() {
@@ -615,12 +619,12 @@ body {
 			$('.game-component-area').animate({
 				'width' : '785px'
 			}, function() {
-				$('#game-info').css({
+				$('.game-info').css({
 					'display' : 'block',
 					'height' : '0px'
 				});
 
-				$('#game-info').animate({
+				$('.game-info').animate({
 					'opacity' : '1'
 				}, 200, function() {
 					annimating = false;
@@ -628,7 +632,7 @@ body {
 			})
 
 		}
-		var showInfo = true;
+		var showInfo = #{gameBean.session.player.configuration.showConfig?'true':'false'};
 		var annimating = false;
 		function checkInfo() {
 			if (!annimating) {

@@ -13,11 +13,11 @@ import java.util.List;
 public class Player implements Serializable{
 	
 	private static final long serialVersionUID = -8224758269420528151L;
-	Integer id;
-	String name;
-	Component component;
-	boolean playing;
-	
+	private Integer id;
+	private String name;
+	private Component component;
+	private boolean playing;
+	private PlayerConfiguration configuration;
 	private Integer choice;
 	List<PlayerListener> listeners;
 	
@@ -71,6 +71,12 @@ public class Player implements Serializable{
 	
 	public void setChoice(Integer choice) {
 		this.choice = choice;
+	}
+	public PlayerConfiguration getConfiguration() {
+		return configuration == null ? configuration = new PlayerConfiguration(): configuration;
+	}
+	public void setConfiguration(PlayerConfiguration configuration) {
+		this.configuration = configuration;
 	}
 	
 }
