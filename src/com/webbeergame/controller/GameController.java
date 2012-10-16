@@ -9,10 +9,9 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import javax.faces.bean.ManagedBean;
 
 /**
  * @author luis
@@ -43,10 +42,25 @@ public class GameController implements PlayerListener, Serializable {
 	}
 
 	public void nextRound() {
+		
 		if (canGoNextRound()) {
+			
 			round++;
+			
 			log.log(Level.INFO, "Starting round: {0}", round);
+			
 			clearRound();
+			
+		
+			
+			Integer r = new Random(10).nextInt();
+			
+			Component c = getComponents().get(0);
+			
+			log.log(Level.INFO, "Setting start value ({0})to Retailer Player", r);
+			
+			c.setNewOrder(r);
+			
 			nextPlayer();
 		}
 

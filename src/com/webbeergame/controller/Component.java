@@ -10,4 +10,5 @@ public interface Component extends Comparable<Component> {
 	Player getPlayer();
 	void setPlayer(Player player);
 	int getOrder();
+	void setNewOrder(Integer order, Component c);
 }
