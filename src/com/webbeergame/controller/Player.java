@@ -71,6 +71,9 @@ public class Player implements Serializable{
 	
 	public void setChoice(Integer choice) {
 		this.choice = choice;
+		if(component != null){
+			component.setRecentOrder(choice);
+		}
 	}
 	public PlayerConfiguration getConfiguration() {
 		return configuration == null ? configuration = new PlayerConfiguration(): configuration;

@@ -2,7 +2,6 @@
     <wb-module deploy-name="WebBeerGame">
         <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
-        <wb-resource deploy-path="/WEB-INF/classes" source-path="/WebContent/WEB-INF/lib"/>
         <property name="context-root" value="WebBeerGame"/>
         <property name="java-output-path" value="/WebBeerGame/build/classes"/>
     </wb-module>

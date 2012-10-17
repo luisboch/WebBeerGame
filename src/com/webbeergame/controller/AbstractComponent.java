@@ -161,17 +161,6 @@ public abstract class AbstractComponent implements Component, Serializable{
 	@Override
 	public void setNewOrder(Integer order) {
 		this.facingOrder = order;
-		
-		backOrder  = backOrder + facingOrder;
-		if(inventory > backOrder){
-			this.supplied = backOrder;
-			inventory = inventory - backOrder;
-			backOrder = 0;
-		}else {
-			backOrder = backOrder - inventory;
-			supplied = inventory;
-			inventory = 0;
-		}
 	}
 }
 
