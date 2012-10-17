@@ -19,9 +19,14 @@ public class IAPlayer extends Player{
 	public void setPlaying(boolean playing) {
 		super.setPlaying(playing);
 		
-		//TODO Gerar os valores de seleção do jogador
 		if(playing){
+			
+			// TODO melhorar calculo de order
+			
+			this.setChoice(this.getComponent().getFacingOrder());
+			
 			log.info("Player "+getName()+" notifing listeners");
+			
 			notifyListener();
 		}
 	}

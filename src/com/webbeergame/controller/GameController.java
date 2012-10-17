@@ -9,7 +9,6 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -45,6 +44,11 @@ public class GameController implements PlayerListener, Serializable {
 		
 		if (canGoNextRound()) {
 			
+			if(round != 0){
+				moveValues();
+				calculateTotals(0);
+			}
+			
 			round++;
 			
 			log.log(Level.INFO, "Starting round: {0}", round);
@@ -53,7 +57,7 @@ public class GameController implements PlayerListener, Serializable {
 			
 		
 			
-			Integer r = new Random(10).nextInt();
+			Integer r = Double.valueOf((Math.random() * 10) + "").intValue();
 			
 			Component c = getComponents().get(0);
 			
@@ -64,6 +68,52 @@ public class GameController implements PlayerListener, Serializable {
 			nextPlayer();
 		}
 
+	}
+
+	private void moveValues() {
+		
+		List<Component> components = getComponents();
+		
+		// Load components
+		Component retailer = components.get(0);
+		Component wholesale = components.get(1);
+		Component distributor = components.get(2);
+		Component factory = components.get(3);
+		
+		// Move Retailer values;
+		retailer.setInventory(retailer.getInventory()+retailer.getDelay1());
+		retailer.setDelay1(retailer.getDelay2());
+		retailer.setDelay2(wholesale.getSupplied());
+
+		// Move WholeSale values;
+		wholesale.setInventory(wholesale.getInventory()+wholesale.getDelay1());
+		wholesale.setDelay1(wholesale.getDelay2());
+		wholesale.setDelay2(distributor.getSupplied());
+
+		// Move Distributor values
+		distributor.setInventory( distributor.getInventory() + distributor.getDelay1() );
+		distributor.setDelay1(distributor.getDelay2());
+		distributor.setDelay2(factory.getSupplied());
+
+		// Move Factory values
+		factory.setInventory( factory.getInventory() + factory.getDelay1() );
+		factory.setDelay1(factory.getDelay2());
+		factory.setDelay2(factory.getPlayer().getChoice());
+		
+	}
+
+	private void calculateTotals(int i) {
+		for(Component c: getComponents()){
+			Integer currentTotal = c.getTotalCost();
+			if(c.getInventory() == 0){
+				currentTotal = currentTotal + (c.getBackOrder()  * 1);
+			} else {
+				Double d = c.getInventory().doubleValue();
+				currentTotal = currentTotal + ((Double)(d * 0.5)).intValue();
+			}
+			c.setTotalCost(currentTotal);
+		}
+		
 	}
 
 	/**
@@ -85,6 +135,7 @@ public class GameController implements PlayerListener, Serializable {
 
 				log.log(Level.INFO, "Player {0} is Playing", c.getPlayer()
 						.getName());
+				
 				c.getPlayer().setPlaying(true);
 				break;
 			}
@@ -208,6 +259,20 @@ public class GameController implements PlayerListener, Serializable {
 
 		getController().put(player.getComponent(), true);
 		player.setPlaying(false);
+		
+		Integer index = 0;
+		
+		for(Component c: getComponents()){
+			if(c.equals(player.getComponent())){
+				break;
+			}
+			index++;
+		}
+		
+		if(index != 3){
+			getComponents().get( index + 1 ).setNewOrder( player.getChoice() );
+		}
+		
 		nextPlayer();
 	}
 

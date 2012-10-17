@@ -285,7 +285,7 @@
 					closable="false" header="Choose" resizable="false">
 					<!-- TODO criar seleção de tipos de components -->
 				Please enter you choice:<br />
-					<p:inputText value="#{gameBean.session.player.choice}" />
+					<p:inputText required="true" value="#{gameBean.session.player.choice}" />
 					<br />
 					<p:commandButton action="#{gameBean.session.player.notifyListener}"
 						value="Set" oncomplete="try {dialogChoice.hide();} catch (e){}"

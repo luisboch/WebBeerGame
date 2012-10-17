@@ -22,6 +22,9 @@ public abstract class AbstractComponent implements Component, Serializable{
 	private Integer recentOrder;
 	private Player player;
 	
+	private Integer facingOrder;
+	private Integer supplied;
+	
 	public AbstractComponent() {
 		this.delay1 = 0;
 		this.delay2 = 0;
@@ -35,6 +38,8 @@ public abstract class AbstractComponent implements Component, Serializable{
 	public Integer getDelay1() {
 		return delay1;
 	}
+
+	@Override
 	public void setDelay1(Integer delay1) {
 		this.delay1 = delay1;
 	}
@@ -42,22 +47,51 @@ public abstract class AbstractComponent implements Component, Serializable{
 	public Integer getDelay2() {
 		return delay2;
 	}
+
+	@Override
 	public void setDelay2(Integer delay2) {
 		this.delay2 = delay2;
 	}
+	
 	@Override
 	public Integer getInventory() {
 		return inventory;
-	}
-	
+	}	
+
+	@Override
 	public void setInventory(Integer inventory) {
 		this.inventory = inventory;
 	}
-	
+
+	@Override
+	public Integer getFacingOrder() {
+		return facingOrder;
+	}
+
+
+	@Override
+	public void setFacingOrder(Integer facingOrder) {
+		this.facingOrder = facingOrder;
+	}
+
+
+	@Override
+	public Integer getSupplied() {
+		return supplied;
+	}
+
+
+	@Override
+	public void setSupplied(Integer supplied) {
+		this.supplied = supplied;
+	}
+
 	@Override
 	public Integer getTotalCost() {
 		return totalCost;
 	}
+
+	@Override
 	public void setTotalCost(Integer totalCost) {
 		this.totalCost = totalCost;
 	}
@@ -66,6 +100,7 @@ public abstract class AbstractComponent implements Component, Serializable{
 		return backOrder;
 	}
 	
+	@Override
 	public void setBackOrder(Integer backOrder) {
 		this.backOrder = backOrder;
 	}
@@ -73,6 +108,8 @@ public abstract class AbstractComponent implements Component, Serializable{
 	public Integer getRecentOrder() {
 		return recentOrder;
 	}
+
+	@Override
 	public void setRecentOrder(Integer recentOrder) {
 		this.recentOrder = recentOrder;
 	}
@@ -120,4 +157,21 @@ public abstract class AbstractComponent implements Component, Serializable{
 		
 		return false;
 	}
+	
+	@Override
+	public void setNewOrder(Integer order) {
+		this.facingOrder = order;
+		
+		backOrder  = backOrder + facingOrder;
+		if(inventory > backOrder){
+			this.supplied = backOrder;
+			inventory = inventory - backOrder;
+			backOrder = 0;
+		}else {
+			backOrder = backOrder - inventory;
+			supplied = inventory;
+			inventory = 0;
+		}
+	}
 }
+
