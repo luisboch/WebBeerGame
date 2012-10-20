@@ -14,6 +14,16 @@
 	<p:ajaxStatus onstart="ajaxStart();" oncomplete="ajaxStop();"
 		onerror="ajaxStop();" />
 	<h:panelGroup layout="block" id="allContent">
+		<script type="text/javascript">
+		function hideChoiceDialog(){
+			if('#{gameBean.session.player.playing}' !== 'true'){
+				try{
+					dialogChoice.hide();
+				}catch (e) {
+				}
+			}
+		}
+		</script>
 		<div id="top-bar" class="ui-widget-header">
 			<h:form id="menuForm">
 				<ul>
@@ -23,7 +33,7 @@
 							oncomplete="try{pDialog.show();dialogChoice.hide()}catch(e){}" /></li>
 					<li><p:commandButton action="#{gameBean.controller.nextRound}"
 							value="Next Round" update=":allContent :messages"
-							rendered="#{gameBean.controller.canGoNextRound}"
+							rendered="#{gameBean.controller.canGoNextRound and gameBean.renderGame}"
 							process="menuForm"
 							oncomplete="try{dialogChoice.show();}catch(e){}" /></li>
 					<li><p:selectBooleanButton onLabel="Hide Info"
@@ -38,15 +48,14 @@
 		</div>
 		<div id="content">
 			<h:form id="formGeral">
-				<h:panelGroup layout="block" id="playerName"
+				<p:panel styleClass="panel-player-name" id="playerName"
 					rendered="#{gameBean.renderPlayerName}">
-			Please enter your name:<br />
-					<p:inputText value="#{gameBean.session.player.name}" />
-					<br />
+			Your name:
+					<p:inputText required="true" requiredMessage="Please, enter your name" value="#{gameBean.session.player.name}" />
 					<p:commandButton action="#{ gameBean.newGame }"
-						value="Start new Game" update=":allContent :messages"
-						process="formGeral" oncomplete="pDialog.show()" />
-				</h:panelGroup>
+						value="Go" update=":allContent :messages"
+						process="formGeral" oncomplete="try{pDialog.show()}catch(e){}" />
+				</p:panel>
 				<h:panelGroup id="gamePanel" rendered="#{gameBean.renderGame}">
 					<div id="game-principal">
 						<p:panel styleClass="game-component-area"
@@ -271,8 +280,8 @@
 					</div>
 				</h:panelGroup>
 
-				<p:dialog id="dialogSelection" widgetVar="pDialog" visible="true"
-					rendered="#{gameBean.renderDialogComponentSelecion}">
+				<p:dialog id="dialogSelection" widgetVar="pDialog" visible="true" closable="false"
+					rendered="#{gameBean.renderDialogComponentSelecion}" header="Component" resizable="false">
 				Please select your component:<br />
 					<p:selectOneMenu value="#{gameBean.selectedComponent}">
 						<f:selectItems value="#{gameBean.components}" var="c"
@@ -298,12 +307,12 @@
 							value="#{gameBean.session.player.component.supplied}" />
 					</h:panelGrid>
 					<br />
-				Please enter you choice:<br />
+				Your choice:<br />
 					<p:inputText required="true"
-						value="#{gameBean.session.player.choice}" />
+						value="#{gameBean.session.player.choice}" requiredMessage="Please enter your choice" />
 					<br />
 					<p:commandButton action="#{gameBean.session.player.notifyListener}"
-						value="Set" oncomplete="try {dialogChoice.hide();} catch (e){}"
+						value="Set" oncomplete="hideChoiceDialog()"
 						update=":allContent :messages" process="formGeral" />
 				</p:dialog>
 			</h:form>
@@ -364,6 +373,9 @@
 				showInfo = !showInfo;
 			}
 		}
+
+		
+		
 		var originalPrimeFacesAjaxResponseFunction;
 		$(document).ready(function(){
 			// cheking error on primefaces ajax response

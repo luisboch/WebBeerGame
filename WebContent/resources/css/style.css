@@ -124,14 +124,14 @@ body {
 
 .component-info .component-attr {
 	float: left;
-	width: 80%;
+	width: 65%;
 	text-align: right;
 	height: 25px;
 }
 
 .component-info .component-value {
 	float: right;
-	width: 20%;
+	width: 35%;
 	height: 25px;
 	font-weight: bold;
 }
@@ -144,7 +144,7 @@ body {
 	z-index: 10;
 	position: absolute;
 	/* TODO remove when set background */
-	background:no-repeat;
+	background: no-repeat;
 	background-position: center center;
 }
 
@@ -152,6 +152,7 @@ body {
 	position: relative;
 	width: 100%;
 }
+
 .centerline {
 	position: absolute;
 	height: 1px;
@@ -161,68 +162,73 @@ body {
 	right: 20%;
 	z-index: 0;
 }
-.left-up-line{
-    background: none repeat scroll 0 0 #0078AE;
-    height: 50%;
-    left: 20%;
-    position: absolute;
-    top: 0;
-    width: 1px;
-    z-index: 0;
-}
-.left-up-line span{
-   left: -7px;
-    top: 5px;
-    position: absolute;
-    z-index: 1;
+
+.left-up-line {
+	background: none repeat scroll 0 0 #0078AE;
+	height: 50%;
+	left: 20%;
+	position: absolute;
+	top: 0;
+	width: 1px;
+	z-index: 0;
 }
 
-
-.right-up-line{
-    background: none repeat scroll 0 0 #0078AE;
-    height: 50%;
-    right: 20%;
-    position: absolute;
-    top: 0;
-    width: 1px;
-    z-index: 0;
-}
-.right-up-line span{
-   left: -7px;
-    top: 5px;
-    position: absolute;
-    z-index: 1;
+.left-up-line span {
+	left: -7px;
+	top: 5px;
+	position: absolute;
+	z-index: 1;
 }
 
-.right-down-line{
-    background: none repeat scroll 0 0 #0078AE;
-    height: 50%;
-    right: 20%;
-    position: absolute;
-    top: 50%;
-    width: 1px;
-    z-index: 0;
+.right-up-line {
+	background: none repeat scroll 0 0 #0078AE;
+	height: 50%;
+	right: 20%;
+	position: absolute;
+	top: 0;
+	width: 1px;
+	z-index: 0;
 }
-.right-down-line span{
-   left: -7px;
-    top: 20px;
-    position: absolute;
-    z-index: 1;
+
+.right-up-line span {
+	left: -7px;
+	top: 5px;
+	position: absolute;
+	z-index: 1;
 }
-.left-down-line{
-    background: none repeat scroll 0 0 #0078AE;
-    height: 50%;
-    left: 20%;
-    position: absolute;
-    top: 50%;
-    width: 1px;
-    z-index: 0;
+
+.right-down-line {
+	background: none repeat scroll 0 0 #0078AE;
+	height: 50%;
+	right: 20%;
+	position: absolute;
+	top: 50%;
+	width: 1px;
+	z-index: 0;
 }
-.left-down-line span{
-   left: -7px;
-    top: 20px;
-    position: absolute;
-    z-index: 1;
+
+.right-down-line span {
+	left: -7px;
+	top: 20px;
+	position: absolute;
+	z-index: 1;
+}
+
+.left-down-line {
+	background: none repeat scroll 0 0 #0078AE;
+	height: 50%;
+	left: 20%;
+	position: absolute;
+	top: 50%;
+	width: 1px;
+	z-index: 0;
+}
+
+.left-down-line span {
+	left: -7px;
+	top: 20px;
+	position: absolute;
+	z-index: 1;
 }
 
 .component-inventory {
@@ -240,6 +246,7 @@ body {
 .arrow-left-1 {
 	left: 23%;
 }
+
 .arrow-left-2 {
 	left: 72.5%;
 }
@@ -249,49 +256,80 @@ body {
 	z-index: 1;
 	position: absolute;
 }
-.component-separator .centerline .ui-icon{
+
+.component-separator .centerline .ui-icon {
 	position: absolute;
-	left:50%;
+	left: 50%;
 	top: -8px;
 }
 
-.left-up-line-separator{
-    background: none repeat scroll 0 0 #0078AE;
-    height: 10px;
-    position: absolute;
-    right: 0;
-    top: -10px;
-    width: 1px;
-    z-index: 0;
-}
-.right-down-line-separator{
-    background: none repeat scroll 0 0 #0078AE;
-    height: 10px;
-    position: absolute;
-    left: 0;
-    top: 0px;
-    width: 1px;
-    z-index: 0;
-}
-.component-inventory{
-	background-image:url("#{resource['images:invetory-1.png']}")
-}
-.component-delay{
-	background-image:url("#{resource['images:truck_1.png']}")
+.left-up-line-separator {
+	background: none repeat scroll 0 0 #0078AE;
+	height: 10px;
+	position: absolute;
+	right: 0;
+	top: -10px;
+	width: 1px;
+	z-index: 0;
 }
 
-.component .component-value{
-	position:absolute;
+.right-down-line-separator {
+	background: none repeat scroll 0 0 #0078AE;
+	height: 10px;
+	position: absolute;
+	left: 0;
+	top: 0px;
+	width: 1px;
+	z-index: 0;
+}
+
+.component-inventory {
+	background-image: url("#{resource['images:invetory-1.png']}")
+}
+
+.component-delay {
+	background-image: url("#{resource['images:truck_1.png']}")
+}
+
+.component .component-value {
+	position: absolute;
 	border: 1px solid #DB8;
 	background: #FDA;
-	opacity:0.6;
-	padding:2px 7px;
-	left:65%;
-	top:-15px;
-	border-radius:2px;
+	opacity: 0.6;
+	padding: 2px 7px;
+	left: 65%;
+	top: -15px;
+	border-radius: 2px;
 	cursor: default;
 	font-weight: bold;
 }
-.component .component-value:hover{
-	opacity:1;
+
+.component .component-value:hover {
+	opacity: 1;
+}
+
+.text-aling-right {
+	text-align: right;
+}
+
+.panel-components .component-name {
+	width: 200px;
+	display: block;
+	position: absolute;
+	margin: auto;
+	bottom: 10px;
+	margin-left: 50%;
+	left: -100px;
+	color: #333;
+	z-index: 9;
+	text-align: center;
+	text-transform: uppercase;
+	font-weight: bold;
+}
+
+.panel-player-name {
+	margin: auto;
+	width:330px;
+	text-align: center;
+	margin-top: 200px;
 }

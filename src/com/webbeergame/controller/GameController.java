@@ -50,7 +50,7 @@ public class GameController implements PlayerListener, Serializable {
 
 			clearRound();
 
-			Integer r = Double.valueOf((Math.random() * 10) + "").intValue();
+			Integer r = getNextRoundValue();
 
 			Component c = getComponents().get(0);
 
@@ -62,6 +62,13 @@ public class GameController implements PlayerListener, Serializable {
 			nextPlayer();
 		}
 
+	}
+
+	private Integer getNextRoundValue() {
+		if(round > 4){
+			return 8;
+		}
+		return 4;
 	}
 
 	private void checkInventory() {
