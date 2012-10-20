@@ -1,9 +1,0 @@
-*.class
-.settings
-.classpath
-Servers/*
-.metadata/*
-# Package Files #
-*.jar
-*.war
-*.ear
