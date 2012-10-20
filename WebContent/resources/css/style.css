@@ -1,0 +1,297 @@
+.ui-widget,.ui-widget .ui-widget {
+	font-size: 13px !important;
+}
+
+#ajax-status {
+	position: absolute;
+	left: 0px;
+	bottom: 0px;
+	padding: 2px 20px 2px 3px;
+	info color: #363;
+	background: #FDA;
+	border: #CA8 1px solid;
+	font-weight: bold;
+}
+
+body {
+	margin: auto;
+	width: 1024px;
+}
+
+#game-players-panel ul {
+	list-style: none;
+	padding: 0px;
+	margin: 0px;
+}
+
+#top-bar ul {
+	list-style: none;
+	padding: 3px 0px;
+	margin: 0px;
+	display: block;
+}
+
+#top-bar ul li {
+	float: right;
+}
+
+#game-players-panel div {
+	height: 20px;
+}
+
+#game-players-panel {
+	cursor: default;
+}
+
+#game-players-panel div span {
+	float: left;
+}
+
+#game-players-panel div span:first-child {
+	margin: 2px 5px 0px 5px;
+}
+
+#game-players-panel div span.player-name {
+	font-size: 14px;
+	margin-right: 10px;
+}
+
+.game-info {
+	float: right;
+	width: 230px;
+}
+
+#current-round div {
+	text-align: right;
+	margin-right: 20px;
+}
+
+#current-round {
+	margin-top: 10px;
+}
+
+.game-info-items div.game-infor-item,.game-info-items div.game-infor-value
+	{
+	margin: 0px;
+	border: none;
+	padding: 0px;
+}
+
+.game-info-items div.game-infor-item {
+	width: 80%;
+	float: left;
+}
+
+.game-info-items div.game-info-value {
+	width: 20%;
+	float: right;
+	font-weight: bold;
+}
+
+.game-component-area {
+	width: 785px;
+	float: left;
+}
+
+.game-component-area .components-info {
+	width: 20%;
+	height: 300px;
+	float: right;
+	height: 300px;
+}
+
+.game-component-area .components-items {
+	width: 80%;
+	float: left;
+}
+
+.components-items {
+	position: relative;
+}
+
+.component-separator {
+	height: 10px;
+	position: relative;
+}
+
+.component-height {
+	height: 80px;
+}
+
+.component-info {
+	
+}
+
+.component-info .component-attr {
+	float: left;
+	width: 80%;
+	text-align: right;
+	height: 25px;
+}
+
+.component-info .component-value {
+	float: right;
+	width: 20%;
+	height: 25px;
+	font-weight: bold;
+}
+
+.component {
+	height: 30px;
+	width: 19%;
+	float: left;
+	margin-top: 25px;
+	z-index: 10;
+	position: absolute;
+	/* TODO remove when set background */
+	background:no-repeat;
+	background-position: center center;
+}
+
+.panel-components {
+	position: relative;
+	width: 100%;
+}
+.centerline {
+	position: absolute;
+	height: 1px;
+	background: #0078AE;
+	top: 50%;
+	left: 20%;
+	right: 20%;
+	z-index: 0;
+}
+.left-up-line{
+    background: none repeat scroll 0 0 #0078AE;
+    height: 50%;
+    left: 20%;
+    position: absolute;
+    top: 0;
+    width: 1px;
+    z-index: 0;
+}
+.left-up-line span{
+   left: -7px;
+    top: 5px;
+    position: absolute;
+    z-index: 1;
+}
+
+
+.right-up-line{
+    background: none repeat scroll 0 0 #0078AE;
+    height: 50%;
+    right: 20%;
+    position: absolute;
+    top: 0;
+    width: 1px;
+    z-index: 0;
+}
+.right-up-line span{
+   left: -7px;
+    top: 5px;
+    position: absolute;
+    z-index: 1;
+}
+
+.right-down-line{
+    background: none repeat scroll 0 0 #0078AE;
+    height: 50%;
+    right: 20%;
+    position: absolute;
+    top: 50%;
+    width: 1px;
+    z-index: 0;
+}
+.right-down-line span{
+   left: -7px;
+    top: 20px;
+    position: absolute;
+    z-index: 1;
+}
+.left-down-line{
+    background: none repeat scroll 0 0 #0078AE;
+    height: 50%;
+    left: 20%;
+    position: absolute;
+    top: 50%;
+    width: 1px;
+    z-index: 0;
+}
+.left-down-line span{
+   left: -7px;
+    top: 20px;
+    position: absolute;
+    z-index: 1;
+}
+
+.component-inventory {
+	margin-left: 10%;
+}
+
+.component-delay-1 {
+	margin-left: 40%;
+}
+
+.component-delay-2 {
+	margin-left: 70%;
+}
+
+.arrow-left-1 {
+	left: 23%;
+}
+.arrow-left-2 {
+	left: 72.5%;
+}
+
+.component-fragancy .arrow {
+	top: -8px;
+	z-index: 1;
+	position: absolute;
+}
+.component-separator .centerline .ui-icon{
+	position: absolute;
+	left:50%;
+	top: -8px;
+}
+
+.left-up-line-separator{
+    background: none repeat scroll 0 0 #0078AE;
+    height: 10px;
+    position: absolute;
+    right: 0;
+    top: -10px;
+    width: 1px;
+    z-index: 0;
+}
+.right-down-line-separator{
+    background: none repeat scroll 0 0 #0078AE;
+    height: 10px;
+    position: absolute;
+    left: 0;
+    top: 0px;
+    width: 1px;
+    z-index: 0;
+}
+.component-inventory{
+	background-image:url("#{resource['images:invetory-1.png']}")
+}
+.component-delay{
+	background-image:url("#{resource['images:truck_1.png']}")
+}
+
+.component .component-value{
+	position:absolute;
+	border: 1px solid #DB8;
+	background: #FDA;
+	opacity:0.6;
+	padding:2px 7px;
+	left:65%;
+	top:-15px;
+	border-radius:2px;
+	cursor: default;
+	font-weight: bold;
+}
+.component .component-value:hover{
+	opacity:1;
+}

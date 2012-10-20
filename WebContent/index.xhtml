@@ -1,0 +1,385 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<h:head>
+	<h:outputStylesheet name="style.css" library="css" />
+</h:head>
+<h:body>
+	<p:growl id="messages" />
+	<p:ajaxStatus onstart="ajaxStart();" oncomplete="ajaxStop();"
+		onerror="ajaxStop();" />
+	<h:panelGroup layout="block" id="allContent">
+		<div id="top-bar" class="ui-widget-header">
+			<h:form id="menuForm">
+				<ul>
+					<li><p:commandButton action="#{gameBean.newGame}"
+							value="Start new Game" update=":formGeral :messages"
+							process="menuForm"
+							oncomplete="try{pDialog.show();dialogChoice.hide()}catch(e){}" /></li>
+					<li><p:commandButton action="#{gameBean.controller.nextRound}"
+							value="Next Round" update=":allContent :messages"
+							rendered="#{gameBean.controller.canGoNextRound}"
+							process="menuForm"
+							oncomplete="try{dialogChoice.show();}catch(e){}" /></li>
+					<li><p:selectBooleanButton onLabel="Hide Info"
+							offLabel="Show info"
+							value="#{gameBean.session.player.configuration.showConfig}"
+							onchange="checkInfo();">
+							<p:ajax />
+						</p:selectBooleanButton></li>
+					<li style="display: block; clear: both; float: none;"></li>
+				</ul>
+			</h:form>
+		</div>
+		<div id="content">
+			<h:form id="formGeral">
+				<h:panelGroup layout="block" id="playerName"
+					rendered="#{gameBean.renderPlayerName}">
+			Please enter your name:<br />
+					<p:inputText value="#{gameBean.session.player.name}" />
+					<br />
+					<p:commandButton action="#{ gameBean.newGame }"
+						value="Start new Game" update=":allContent :messages"
+						process="formGeral" oncomplete="pDialog.show()" />
+				</h:panelGroup>
+				<h:panelGroup id="gamePanel" rendered="#{gameBean.renderGame}">
+					<div id="game-principal">
+						<p:panel styleClass="game-component-area"
+							style="width:#{gameBean.session.player.configuration.showConfig?'785px':'1017px'}">
+							<div class="components-items">
+								<div class="component-height panel-components">
+									<span class="component-name">Retailer</span>
+									<div class="component-fragancy">
+										<div class="centerline">
+											<span class="ui-icon ui-icon-carat-1-w arrow arrow-left-1"></span>
+											<span class="ui-icon ui-icon-carat-1-w arrow arrow-left-2"></span>
+											<span class="ui-icon ui-icon-carat-1-w arrow arrow-left-2"></span>
+										</div>
+										<div class="left-up-line">
+											<span class="ui-icon ui-icon-carat-1-n "></span>
+										</div>
+										<div class="right-down-line">
+											<span class="ui-icon ui-icon-carat-1-n "></span>
+										</div>
+									</div>
+									<div class="component component-inventory">
+										<span class="component-value">#{gameBean.controller.components[0].inventory}</span>
+									</div>
+									<div class="component-delay-1 component component-delay">
+										<span class="component-value">#{gameBean.controller.components[0].delay1}</span>
+									</div>
+									<div class="component-delay-2 component component-delay">
+										<span class="component-value">#{gameBean.controller.components[0].delay2}</span>
+									</div>
+								</div>
+
+								<div class="component-separator">
+									<div class="centerline">
+										<span class="ui-icon ui-icon-carat-1-e"></span> <span
+											class="left-up-line-separator"></span> <span
+											class="right-down-line-separator"></span>
+									</div>
+								</div>
+
+								<div class="component-height panel-components">
+									<span class="component-name">WholeSaler</span>
+									<div class="component-fragancy">
+										<div class="centerline">
+											<span class="ui-icon ui-icon-carat-1-w arrow arrow-left-1"></span>
+											<span class="ui-icon ui-icon-carat-1-w arrow arrow-left-2"></span>
+											<span class="ui-icon ui-icon-carat-1-w arrow arrow-left-2"></span>
+										</div>
+										<div class="left-up-line">
+											<span class="ui-icon ui-icon-carat-1-n "></span>
+										</div>
+										<div class="right-down-line">
+											<span class="ui-icon ui-icon-carat-1-n "></span>
+										</div>
+									</div>
+									<div class="component component-inventory">
+										<span class="component-value">#{gameBean.controller.components[1].inventory}</span>
+									</div>
+									<div class="component-delay-1 component component-delay">
+										<span class="component-value">#{gameBean.controller.components[1].delay1}</span>
+									</div>
+									<div class="component-delay-2 component component-delay">
+										<span class="component-value">#{gameBean.controller.components[1].delay2}</span>
+									</div>
+								</div>
+								<div class="component-separator">
+									<div class="centerline">
+										<span class="ui-icon ui-icon-carat-1-e"></span> <span
+											class="left-up-line-separator"></span> <span
+											class="right-down-line-separator"></span>
+									</div>
+								</div>
+
+								<div class="component-height panel-components">
+									<span class="component-name">Distributor</span>
+									<div class="component-fragancy">
+										<div class="centerline">
+											<span class="ui-icon ui-icon-carat-1-w arrow arrow-left-1"></span>
+											<span class="ui-icon ui-icon-carat-1-w arrow arrow-left-2"></span>
+											<span class="ui-icon ui-icon-carat-1-w arrow arrow-left-2"></span>
+										</div>
+										<div class="left-up-line">
+											<span class="ui-icon ui-icon-carat-1-n "></span>
+										</div>
+										<div class="right-down-line">
+											<span class="ui-icon ui-icon-carat-1-n "></span>
+										</div>
+									</div>
+									<div class="component component-inventory">
+										<span class="component-value">#{gameBean.controller.components[2].inventory}</span>
+									</div>
+									<div class="component-delay-1 component component-delay">
+										<span class="component-value">#{gameBean.controller.components[2].delay1}</span>
+									</div>
+									<div class="component-delay-2 component component-delay">
+										<span class="component-value">#{gameBean.controller.components[2].delay2}</span>
+									</div>
+
+
+								</div>
+								<div class="component-separator">
+									<div class="centerline">
+										<span class="ui-icon ui-icon-carat-1-e"></span> <span
+											class="left-up-line-separator"></span> <span
+											class="right-down-line-separator"></span>
+									</div>
+								</div>
+
+								<div class="component-height panel-components">
+									<span class="component-name">Factory</span>
+									<div class="component-fragancy">
+										<div class="centerline">
+											<span class="ui-icon ui-icon-carat-1-w arrow arrow-left-1"></span>
+											<span class="ui-icon ui-icon-carat-1-w arrow arrow-left-2"></span>
+											<span class="ui-icon ui-icon-carat-1-w arrow arrow-left-2"></span>
+										</div>
+										<div class="left-up-line">
+											<span class="ui-icon ui-icon-carat-1-n "></span>
+										</div>
+									</div>
+									<div class="component component-inventory">
+										<span class="component-value">#{gameBean.controller.components[3].inventory}</span>
+									</div>
+									<div class="component-delay-1 component component-delay">
+										<span class="component-value">#{gameBean.controller.components[3].delay1}</span>
+									</div>
+									<div class="component-delay-2 component"
+										style="background-image:url(#{resource['images:invetory-1.png']})">
+										<span class="component-value">#{gameBean.controller.components[3].delay2}</span>
+									</div>
+								</div>
+
+								<div class="component-separator"></div>
+
+
+								<div style="clear: both;"></div>
+							</div>
+							<div class="components-info">
+								<div class="component-height component-info">
+									<div class="ui-widget-content">
+										<div class="component-attr">Total Cost:</div>
+										<div class="component-value">#{gameBean.controller.components[0].totalCost}</div>
+										<div class="component-attr">Back Order:</div>
+										<div class="component-value">#{gameBean.controller.components[0].backOrder}</div>
+										<div class="component-attr">Recent Order:</div>
+										<div class="component-value">#{gameBean.controller.components[0].recentOrder}</div>
+										<div style="clear: both;"></div>
+									</div>
+								</div>
+								<div class="component-separator"></div>
+								<div class="component-height component-info">
+
+									<div class="ui-widget-content">
+										<div class="component-attr">Total Cost:</div>
+										<div class="component-value">#{gameBean.controller.components[1].totalCost}</div>
+										<div class="component-attr">Back Order:</div>
+										<div class="component-value">#{gameBean.controller.components[1].backOrder}</div>
+										<div class="component-attr">Recent Order:</div>
+										<div class="component-value">#{gameBean.controller.components[1].recentOrder}</div>
+										<div style="clear: both;"></div>
+									</div>
+
+								</div>
+								<div class="component-separator"></div>
+								<div class="component-height component-info">
+									<div class="ui-widget-content">
+										<div class="component-attr">Total Cost:</div>
+										<div class="component-value">#{gameBean.controller.components[2].totalCost}</div>
+										<div class="component-attr">Back Order:</div>
+										<div class="component-value">#{gameBean.controller.components[2].backOrder}</div>
+										<div class="component-attr">Recent Order:</div>
+										<div class="component-value">#{gameBean.controller.components[2].recentOrder}</div>
+										<div style="clear: both;"></div>
+									</div>
+								</div>
+								<div class="component-separator"></div>
+								<div class="component-height component-info">
+									<div class="ui-widget-content">
+										<div class="component-attr">Total Cost:</div>
+										<div class="component-value">#{gameBean.controller.components[3].totalCost}</div>
+										<div class="component-attr">Back Order:</div>
+										<div class="component-value">#{gameBean.controller.components[3].backOrder}</div>
+										<div class="component-attr">Recent Order:</div>
+										<div class="component-value">#{gameBean.controller.components[3].recentOrder}</div>
+										<div style="clear: both;"></div>
+									</div>
+								</div>
+								<div style="clear: both;"></div>
+							</div>
+							<div style="clear: both;"></div>
+						</p:panel>
+						<h:panelGroup layout="block" styleClass="game-info"
+							style="#{gameBean.session.player.configuration.showConfig?'':'display:none'}">
+							<p:panel toggleable="true" header="Infos"
+								styleClass="game-info-items">
+								<div class="game-infor-item">CurrentRound</div>
+								<div class="game-info-value">#{gameBean.controller.round}
+								</div>
+								<div style="clear: both;"></div>
+							</p:panel>
+							<p:panel header="Players" toggleable="true" id="p-panel-players">
+								<div id="game-players-panel">
+
+									<ul>
+										<ui:repeat var="c" value="#{ gameBean.controller.components }">
+											<h:panelGroup layout="block"
+												class="ui-widget ui-state-highlight ui-corner-all"
+												rendered="#{ c.player.playing}">
+												<span class="ui-icon ui-icon-circle-triangle-e"></span>
+												<h:outputText value="#{c.player.name}" />
+											</h:panelGroup>
+											<h:panelGroup layout="block" class="ui-widget ui-corner-all"
+												rendered="#{not c.player.playing}">
+												<span
+													class="#{gameBean.controller.controller[c] ? 'ui-icon ui-icon-check' : 'ui-icon ui-icon-clock'}"></span>
+												<h:outputText value="#{c.player.name}" />
+											</h:panelGroup>
+										</ui:repeat>
+									</ul>
+								</div>
+							</p:panel>
+						</h:panelGroup>
+					</div>
+				</h:panelGroup>
+
+				<p:dialog id="dialogSelection" widgetVar="pDialog" visible="true"
+					rendered="#{gameBean.renderDialogComponentSelecion}">
+				Please select your component:<br />
+					<p:selectOneMenu value="#{gameBean.selectedComponent}">
+						<f:selectItems value="#{gameBean.components}" var="c"
+							itemLabel="#{c.toString()}" itemValue="#{c}" />
+					</p:selectOneMenu>
+					<br />
+					<p:commandButton action="#{gameBean.startGame}" value="Play"
+						oncomplete="try {pDialog.hide();} catch (e){}"
+						update=":allContent :messages" process="formGeral" />
+				</p:dialog>
+				<p:dialog id="dialogChoice" width="220" widgetVar="dialogChoice"
+					modal="true" rendered="#{gameBean.session.player.playing}"
+					visible="true" closable="false" header="Choose" resizable="false">
+					<h:panelGrid columns="2" columnClasses="text-aling-right">
+						<h:outputText value="Facing an Order of" style="text-aling:right" />
+						<h:outputText
+							value="#{gameBean.session.player.component.facingOrder}" />
+						<h:outputText value="And Backorder of" style="text-aling:right" />
+						<h:outputText
+							value="#{gameBean.session.player.component.backOrder}" />
+						<h:outputText value="You Suplied" style="text-aling:right" />
+						<h:outputText
+							value="#{gameBean.session.player.component.supplied}" />
+					</h:panelGrid>
+					<br />
+				Please enter you choice:<br />
+					<p:inputText required="true"
+						value="#{gameBean.session.player.choice}" />
+					<br />
+					<p:commandButton action="#{gameBean.session.player.notifyListener}"
+						value="Set" oncomplete="try {dialogChoice.hide();} catch (e){}"
+						update=":allContent :messages" process="formGeral" />
+				</p:dialog>
+			</h:form>
+			<div style="clear: both;"></div>
+		</div>
+	</h:panelGroup>
+	<div id="footer-bar"></div>
+	<div id="ajax-status" style="display: none;">Loading</div>
+	<script type="text/javascript">
+		function ajaxStart() {
+			$('#ajax-status').fadeIn();
+		}
+		function ajaxStop() {
+			$('#ajax-status').fadeOut();
+		}
+		function hideGameInfo() {
+			$('.game-info').animate({
+				'opacity' : '0'
+			}, 200, function() {
+				$('.game-info').css('display', 'none')
+				$('.game-component-area').animate({
+					'width' : '1017px'
+				}, function() {
+					annimating = false;
+				})
+			})
+
+		}
+		function showGameInfo() {
+
+			$('.game-component-area').animate({
+				'width' : '785px'
+			}, function() {
+				$('.game-info').css({
+					'display' : 'block',
+					'height' : '0px'
+				});
+
+				$('.game-info').animate({
+					'opacity' : '1'
+				}, 200, function() {
+					annimating = false;
+				})
+			})
+
+		}
+		var showInfo = #{gameBean.session.player.configuration.showConfig?'true':'false'};
+		var annimating = false;
+		function checkInfo() {
+			if (!annimating) {
+				annimating = true;
+
+				if (showInfo) {
+					hideGameInfo();
+				} else {
+					showGameInfo();
+				}
+				showInfo = !showInfo;
+			}
+		}
+		var originalPrimeFacesAjaxResponseFunction;
+		$(document).ready(function(){
+			// cheking error on primefaces ajax response
+			originalPrimeFacesAjaxResponseFunction = PrimeFaces.ajax.AjaxResponse; 
+			PrimeFaces.ajax.AjaxResponse = function(responseXML) {
+				// Se encontrar a tag de erro redireciona se não realiza o request normalmente. 
+				if($(responseXML.documentElement).find('error').size() == 1){ 
+					window.location = window.location; 
+				} else { 
+					originalPrimeFacesAjaxResponseFunction.apply(this, arguments); 
+				}
+			};
+		})
+	</script>
+</h:body>
+</html>
+
+
+
