@@ -39,7 +39,6 @@ public class IAPlayer extends Player{
 					requestedOrders = 0;
 				}
 			}
-			
 			Integer inventory = 
 					this.getComponent().getInventory()
 					- this.getComponent().getFacingOrder() 
@@ -48,8 +47,10 @@ public class IAPlayer extends Player{
 			
 			if(inventory < MIN_INVENTORY && !orderRealized){
 				Integer requestingOrder;
+
 				if(getComponent().getFacingOrder() + getComponent().getBackOrder() > ORDER){
 					requestingOrder = getComponent().getFacingOrder() + getComponent().getBackOrder() ;
+
 				} else {
 					requestingOrder = IAPlayer.ORDER;
 				}
@@ -67,3 +68,4 @@ public class IAPlayer extends Player{
 	}
 	
 }
+

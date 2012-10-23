@@ -15,15 +15,15 @@
 		onerror="ajaxStop();" />
 	<h:panelGroup layout="block" id="allContent">
 		<script type="text/javascript">
-		function hideChoiceDialog(){
-			if('#{gameBean.session.player.playing}' !== 'true'){
-				try{
-					dialogChoice.hide();
-				}catch (e) {
-				}
-			}
+function hideChoiceDialog(){
+	if('#{gameBean.session.player.playing}' !== 'true'){
+		try{
+			dialogChoice.hide();
+		}catch (e) {
 		}
-		</script>
+	}
+}
+</script>
 		<div id="top-bar" class="ui-widget-header">
 			<h:form id="menuForm">
 				<ul>
@@ -50,11 +50,12 @@
 			<h:form id="formGeral">
 				<p:panel styleClass="panel-player-name" id="playerName"
 					rendered="#{gameBean.renderPlayerName}">
-			Your name:
-					<p:inputText required="true" requiredMessage="Please, enter your name" value="#{gameBean.session.player.name}" />
-					<p:commandButton action="#{ gameBean.newGame }"
-						value="Go" update=":allContent :messages"
-						process="formGeral" oncomplete="try{pDialog.show()}catch(e){}" />
+Your name:
+<p:inputText required="true" requiredMessage="Please, enter your name"
+						value="#{gameBean.session.player.name}" />
+					<p:commandButton action="#{ gameBean.newGame }" value="Go"
+						update=":allContent :messages" process="formGeral"
+						oncomplete="try{pDialog.show()}catch(e){}" />
 				</p:panel>
 				<h:panelGroup id="gamePanel" rendered="#{gameBean.renderGame}">
 					<div id="game-principal">
@@ -194,7 +195,7 @@
 							</div>
 							<div class="components-info">
 								<div class="component-height component-info">
-									<div class="ui-widget-content">
+									<div class="ui-widget-content #{gameBean.session.player == gameBean.controller.components[0].player ? 'ui-state-highlight':''}">
 										<div class="component-attr">Total Cost:</div>
 										<div class="component-value">#{gameBean.controller.components[0].totalCost}</div>
 										<div class="component-attr">Back Order:</div>
@@ -206,8 +207,7 @@
 								</div>
 								<div class="component-separator"></div>
 								<div class="component-height component-info">
-
-									<div class="ui-widget-content">
+									<div class="ui-widget-content #{gameBean.session.player == gameBean.controller.components[1].player ? 'ui-state-highlight':''}">
 										<div class="component-attr">Total Cost:</div>
 										<div class="component-value">#{gameBean.controller.components[1].totalCost}</div>
 										<div class="component-attr">Back Order:</div>
@@ -220,7 +220,7 @@
 								</div>
 								<div class="component-separator"></div>
 								<div class="component-height component-info">
-									<div class="ui-widget-content">
+									<div class="ui-widget-content #{gameBean.session.player == gameBean.controller.components[2].player ? 'ui-state-highlight':''}">
 										<div class="component-attr">Total Cost:</div>
 										<div class="component-value">#{gameBean.controller.components[2].totalCost}</div>
 										<div class="component-attr">Back Order:</div>
@@ -232,7 +232,7 @@
 								</div>
 								<div class="component-separator"></div>
 								<div class="component-height component-info">
-									<div class="ui-widget-content">
+									<div class="ui-widget-content #{gameBean.session.player == gameBean.controller.components[3].player ? 'ui-state-highlight':''}">
 										<div class="component-attr">Total Cost:</div>
 										<div class="component-value">#{gameBean.controller.components[3].totalCost}</div>
 										<div class="component-attr">Back Order:</div>
@@ -280,9 +280,11 @@
 					</div>
 				</h:panelGroup>
 
-				<p:dialog id="dialogSelection" widgetVar="pDialog" visible="true" closable="false"
-					rendered="#{gameBean.renderDialogComponentSelecion}" header="Component" resizable="false">
-				Please select your component:<br />
+				<p:dialog id="dialogSelection" widgetVar="pDialog" visible="true"
+					closable="false"
+					rendered="#{gameBean.renderDialogComponentSelecion}"
+					header="Component" resizable="false">
+Please select your component:<br />
 					<p:selectOneMenu value="#{gameBean.selectedComponent}">
 						<f:selectItems value="#{gameBean.components}" var="c"
 							itemLabel="#{c.toString()}" itemValue="#{c}" />
@@ -307,9 +309,10 @@
 							value="#{gameBean.session.player.component.supplied}" />
 					</h:panelGrid>
 					<br />
-				Your choice:<br />
+Your choice:<br />
 					<p:inputText required="true"
-						value="#{gameBean.session.player.choice}" requiredMessage="Please enter your choice" />
+						value="#{gameBean.session.player.choice}"
+						requiredMessage="Please enter your choice" />
 					<br />
 					<p:commandButton action="#{gameBean.session.player.notifyListener}"
 						value="Set" oncomplete="hideChoiceDialog()"
@@ -322,74 +325,73 @@
 	<div id="footer-bar"></div>
 	<div id="ajax-status" style="display: none;">Loading</div>
 	<script type="text/javascript">
-		function ajaxStart() {
-			$('#ajax-status').fadeIn();
+function ajaxStart() {
+	$('#ajax-status').fadeIn();
+}
+function ajaxStop() {
+	$('#ajax-status').fadeOut();
+}
+function hideGameInfo() {
+	$('.game-info').animate({
+	'opacity' : '0'
+	}, 200, function() {
+		$('.game-info').css('display', 'none')
+		$('.game-component-area').animate({
+			'width' : '1017px'
+		}, function() {
+	annimating = false;
+	})
+})
+
+}
+function showGameInfo() {
+
+$('.game-component-area').animate({
+	'width' : '785px'
+	}, function() {
+	$('.game-info').css({
+		'display' : 'block',
+		'height' : '0px'
+});
+$('.game-info').animate({
+		'opacity' : '1'
+	}, 200, function() {
+		annimating = false;
+	})
+})
+
+}
+var showInfo = #{gameBean.session.player.configuration.showConfig?'true':'false'};
+var annimating = false;
+function checkInfo() {
+	if (!annimating) {
+	annimating = true;
+
+	if (showInfo) {
+		hideGameInfo();
+	} else {
+		showGameInfo();
+	}
+	showInfo = !showInfo;
+	}
+}
+
+
+
+var originalPrimeFacesAjaxResponseFunction;
+$(document).ready(function(){
+	// cheking error on primefaces ajax response
+	originalPrimeFacesAjaxResponseFunction = PrimeFaces.ajax.AjaxResponse;
+	PrimeFaces.ajax.AjaxResponse = function(responseXML) {
+		// Se encontrar a tag de erro redireciona se não realiza o request normalmente.
+		if($(responseXML.documentElement).find('error').size() == 1){
+			window.location = window.location;
+		} else {
+			originalPrimeFacesAjaxResponseFunction.apply(this, arguments);
 		}
-		function ajaxStop() {
-			$('#ajax-status').fadeOut();
-		}
-		function hideGameInfo() {
-			$('.game-info').animate({
-				'opacity' : '0'
-			}, 200, function() {
-				$('.game-info').css('display', 'none')
-				$('.game-component-area').animate({
-					'width' : '1017px'
-				}, function() {
-					annimating = false;
-				})
-			})
-
-		}
-		function showGameInfo() {
-
-			$('.game-component-area').animate({
-				'width' : '785px'
-			}, function() {
-				$('.game-info').css({
-					'display' : 'block',
-					'height' : '0px'
-				});
-
-				$('.game-info').animate({
-					'opacity' : '1'
-				}, 200, function() {
-					annimating = false;
-				})
-			})
-
-		}
-		var showInfo = #{gameBean.session.player.configuration.showConfig?'true':'false'};
-		var annimating = false;
-		function checkInfo() {
-			if (!annimating) {
-				annimating = true;
-
-				if (showInfo) {
-					hideGameInfo();
-				} else {
-					showGameInfo();
-				}
-				showInfo = !showInfo;
-			}
-		}
-
-		
-		
-		var originalPrimeFacesAjaxResponseFunction;
-		$(document).ready(function(){
-			// cheking error on primefaces ajax response
-			originalPrimeFacesAjaxResponseFunction = PrimeFaces.ajax.AjaxResponse; 
-			PrimeFaces.ajax.AjaxResponse = function(responseXML) {
-				// Se encontrar a tag de erro redireciona se não realiza o request normalmente. 
-				if($(responseXML.documentElement).find('error').size() == 1){ 
-					window.location = window.location; 
-				} else { 
-					originalPrimeFacesAjaxResponseFunction.apply(this, arguments); 
-				}
-			};
-		})
-	</script>
+	};
+})
+</script>
 </h:body>
 </html>
 
